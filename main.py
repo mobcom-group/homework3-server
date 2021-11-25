@@ -38,11 +38,12 @@ def sendMessagePhone1():
     timeInput = input_json["time"]
     image = input_json["imagebase64"]
     message = messaging.Message(
-    data={
-        'message': messageInput,
-        'time': timeInput,
-    },
-    token= tokenPhone2,
+        notification = messaging.Notification(
+            title = 'Incoming new message',
+            body = messageInput,
+        ),
+        data = {"time" : timeInput},
+        token= tokenPhone2
     )
     response = messaging.send(message)
     print('Successfully sent message:', response)
@@ -56,11 +57,12 @@ def sendMessagePhone2():
     timeInput = input_json["time"]
     image = input_json["imagebase64"]
     message = messaging.Message(
-    data={
-        'message': messageInput,
-        'time': timeInput,
-    },
-    token= tokenPhone1,
+        notification= messaging.Notification(
+            title = 'Incoming new message',
+            body = messageInput,
+        ),
+        data={"time" : timeInput},
+        token= tokenPhone1
     )
     response = messaging.send(message)
     print('Successfully sent message:', response)
