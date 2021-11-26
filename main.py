@@ -21,7 +21,7 @@ def registerToken():
     token = input_json["token"]
     subscribe = messaging.subscribe_to_topic(token, TOPIC_ID)
     print(subscribe)
-    return {"response": subscribe, "status": "success"}
+    return {"response": "device successfully registered", "status": "success"}
 
 @app.route('/send-message', methods=["POST"])
 def sendMessage():
