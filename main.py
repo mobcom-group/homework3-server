@@ -29,12 +29,13 @@ def sendMessage():
     messageInput = input_json["message"]
     timeInput = input_json["time"]
     image = input_json["imagebase64"]
+    senderUUID = input_json["senderUUID"]
     message = messaging.Message(
         notification = messaging.Notification(
             title = 'New Message Received',
             body = messageInput,
         ),
-        data = {"time" : timeInput},
+        data = {"time" : timeInput, "senderUUID" : senderUUID},
         topic= TOPIC_ID
     )
     send = messaging.send(message)
@@ -42,4 +43,4 @@ def sendMessage():
     return {"response": send, "status" : "success"}
 
 if __name__ == "__main__":
-    app.run(port=8080, debug=True)
+    app.run(host='0.0.0.0', debug=True)
