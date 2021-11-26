@@ -31,7 +31,7 @@ def sendMessage():
     image = input_json["imagebase64"]
     message = messaging.Message(
         notification = messaging.Notification(
-            title = 'Incoming new message',
+            title = 'New Message Received',
             body = messageInput,
         ),
         data = {"time" : timeInput},
