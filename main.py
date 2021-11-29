@@ -1,14 +1,16 @@
-from flask import Flask, request
+from flask import Flask, request, url_for
 from firebase_admin import messaging
 import firebase_admin
 from firebase_admin import credentials
+import os
 
 TOPIC_ID = "1" # Topic Id
+IMAGES_FOLDER = "images"
 
 cred = credentials.Certificate("mobcom-f1a53-firebase-adminsdk-2dkvm-45db9d6f3c.json")
 firebase_admin.initialize_app(cred)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="images")
 
 @app.route("/")
 def hello_world():
@@ -38,6 +40,29 @@ def sendMessage():
         data = {"time" : timeInput, "senderUUID" : senderUUID},
         topic= TOPIC_ID
     )
+    send = messaging.send(message)
+    print(send)
+    return {"response": send, "status" : "success"}
+
+@app.route('/send-image', methods=["POST"])
+def sendImage():
+    imageFile = request.files['image']
+    path = os.path.join(IMAGES_FOLDER, imageFile.filename)
+    imageUrl = "http://" + request.host + url_for('static', filename=imageFile.filename)
+    print(imageUrl)
+    imageFile.save(path)
+
+    senderUUID = request.form.get('senderUUID')
+    timeInput = request.form.get('time')
+    message = messaging.Message(
+        notification = messaging.Notification(
+            title = 'New Message Received',
+            image = imageUrl
+        ),
+        data = {"time" : timeInput, "senderUUID" : senderUUID},
+        topic= TOPIC_ID
+    )
+
     send = messaging.send(message)
     print(send)
     return {"response": send, "status" : "success"}
