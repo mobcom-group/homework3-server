@@ -37,7 +37,7 @@ def sendMessage():
             title = 'New Message Received',
             body = messageInput,
         ),
-        data = {"time" : timeInput, "senderUUID" : senderUUID},
+        data = {"time" : timeInput, "senderUUID" : senderUUID, "body": messageInput},
         topic= TOPIC_ID
     )
     send = messaging.send(message)
@@ -60,7 +60,7 @@ def sendImage():
             image = imageUrl,
             body = "image"
         ),
-        data = {"time" : timeInput, "senderUUID" : senderUUID},
+        data = {"time" : timeInput, "senderUUID" : senderUUID, "body": "image", "image": imageUrl},
         topic= TOPIC_ID
     )
 
