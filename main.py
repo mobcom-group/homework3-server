@@ -30,7 +30,6 @@ def sendMessage():
     input_json = request.get_json(force=True)
     messageInput = input_json["message"]
     timeInput = input_json["time"]
-    image = input_json["imagebase64"]
     senderUUID = input_json["senderUUID"]
     message = messaging.Message(
         notification = messaging.Notification(
