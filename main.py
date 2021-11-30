@@ -57,7 +57,8 @@ def sendImage():
     message = messaging.Message(
         notification = messaging.Notification(
             title = 'New Message Received',
-            image = imageUrl
+            image = imageUrl,
+            body = "image"
         ),
         data = {"time" : timeInput, "senderUUID" : senderUUID},
         topic= TOPIC_ID
